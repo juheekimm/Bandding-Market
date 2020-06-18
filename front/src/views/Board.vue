@@ -1,9 +1,9 @@
 <template>
   <v-container class="Nanum">
-    <v-layout wrap class="ma-0" align-center>
+    <v-layout wrap class="ma-0">
       <!-- 남은 시간 -->
       <v-flex
-        sm4
+        sm12
         xs12
         class="my-1"
         v-bind:style="{
@@ -13,7 +13,6 @@
           color: 'white',
           'font-size': '1.4rem',
         }"
-        mb-3
       >
         <div
           v-if="
@@ -24,12 +23,12 @@
           "
         >
           <v-icon color="white" style="font-size: 2rem;">mdi-timer</v-icon>
-          <span class="mx-1">공구가 마감되었습니다 </span>
+          <span class="mx-1">공구가 마감됬습니다 </span>
         </div>
         <div v-else class="fw700">
           <v-icon color="white" style="font-size: 2rem;">mdi-timer</v-icon>
           <span class="mx-1">{{ remainTime.day }}일 </span>
-          <span class="mx-1">{{ remainTime.hours }}시간 </span>
+          <span class="mx-1">{{ remainTime.hours }}시 </span>
           <span class="mx-1">{{ remainTime.minutes }}분 </span>
           <span class="mx-1">{{ remainTime.seconds }}초 </span>
           <!-- <span class="d-none d-sm-flex">남았습니다</span> -->
@@ -39,9 +38,9 @@
 
       <!--태그-->
       <v-flex sm12 xs12>
-        <h4>
-          [{{ board.category == 0 ? '배달 음식' : '공동구매' }} 게시판]
-        </h4>
+        <span>
+          <u>#{{ board.category == 0 ? '배달' : '상품' }}</u>
+        </span>
       </v-flex>
 
       <!--제목-->
@@ -85,19 +84,18 @@
           {{ board.writeDate.substring(11, 19) }}</span
         >
         <!-- <span class="mx-2"></span> -->
-        <!-- <v-divider vertical></v-divider> -->
-        <br>
+        <v-divider vertical></v-divider>
         <span>
-        <v-chip
-          v-for="(keyword, index) in board.keyword.split('#').slice(1)"
-          :key="board.board_id + ' ' + index + ' ' + keyword"
-          color="#14d3ff"
-          class="mr-1 mt-2"
-          style="color:white; font-weight: bold; border-radius: 6px !important"
-          small
-        >
-          #{{ keyword }}
-        </v-chip>
+          <v-chip
+            v-for="(keyword, index) in board.keyword.split('#').slice(1)"
+            :key="board.board_id + ' ' + index + ' ' + keyword"
+            color="#f076b6"
+            class="mx-1"
+            style="color:white"
+            small
+          >
+            #{{ keyword }}
+          </v-chip>
         </span>
       </v-flex>
 
@@ -216,7 +214,7 @@
       <v-flex sm1 xs12 style="text-align: right;">
         <v-btn
           @click="writeComment"
-          style="width: 100%;background: #82b1ff; color: white;"
+          style="height: 100%;width: 100%;background: #82b1ff; color: white;"
           class="fw700"
           >댓글입력</v-btn
         >
@@ -276,13 +274,13 @@
           <v-col class="py-1" style="text-align: right;">
             <span
               style="cursor: pointer; text-decoration: underline;"
-              v-on:click="test2(comment.comment_id)"
+              v-on:click="deleteComment(comment.comment_id)"
               class="mx-1"
               >수정</span
             >
             <span
               style="cursor: pointer; text-decoration: underline;"
-              @click="test2(comment.comment_id)"
+              @click="deleteComment(comment.comment_id)"
               class="mx-1"
               >삭제</span
             >
@@ -297,9 +295,16 @@
       </v-container>
     </v-hover>
 
-    <v-btn @click="userInfoDailogFlag = !userInfoDailogFlag">
-      {{ userInfoDailogFlag }}</v-btn
-    >
+    <v-container>
+      <v-row>
+        <v-col cols="12" style="text-align:end">
+          <v-btn @click="deleteBoard()">삭제</v-btn>
+          <v-btn @click="goToSearch">
+            목록으로 가기
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
 
     <UserInfoDailog
       v-if="userInfoDailogFlag"
@@ -418,19 +423,19 @@ export default {
     this.remainTimeFunction = setInterval(this.calRemainingTime, 1000)
 
     this.$store.dispatch(Constant.LOAD_COMMENTLIST, {
-      bid: this.$route.query.id
+      bid: this.$route.query.id,
     })
-    
+
     this.$store.dispatch(Constant.SEARCH_BOARD, {
       id: this.$route.query.id,
       callback: this.drawMap,
     })
 
-
+    this.$vuetify.goTo(0)
   },
   mounted() {},
   computed: {
-    ...mapState(['board','commentList']),
+    ...mapState(['board', 'commentList']),
   },
   beforeDestroy() {
     clearInterval(this.remainTimeFunction)
