@@ -1,9 +1,9 @@
 <template>
   <v-container class="Nanum">
-    <v-layout wrap class="ma-0">
+    <v-layout wrap class="ma-0" align-center>
       <!-- 남은 시간 -->
       <v-flex
-        sm12
+        sm4
         xs12
         class="my-1"
         v-bind:style="{
@@ -13,6 +13,7 @@
           color: 'white',
           'font-size': '1.4rem',
         }"
+        mb-3
       >
         <div
           v-if="
@@ -23,12 +24,12 @@
           "
         >
           <v-icon color="white" style="font-size: 2rem;">mdi-timer</v-icon>
-          <span class="mx-1">공구가 마감됬습니다 </span>
+          <span class="mx-1">공구가 마감되었습니다 </span>
         </div>
         <div v-else class="fw700">
           <v-icon color="white" style="font-size: 2rem;">mdi-timer</v-icon>
           <span class="mx-1">{{ remainTime.day }}일 </span>
-          <span class="mx-1">{{ remainTime.hours }}시 </span>
+          <span class="mx-1">{{ remainTime.hours }}시간 </span>
           <span class="mx-1">{{ remainTime.minutes }}분 </span>
           <span class="mx-1">{{ remainTime.seconds }}초 </span>
           <!-- <span class="d-none d-sm-flex">남았습니다</span> -->
@@ -38,9 +39,9 @@
 
       <!--태그-->
       <v-flex sm12 xs12>
-        <span>
-          <u>#{{ board.category == 0 ? '배달' : '상품' }}</u>
-        </span>
+        <h4>
+          [{{ board.category == 0 ? '배달 음식' : '공동구매' }} 게시판]
+        </h4>
       </v-flex>
 
       <!--제목-->
@@ -84,18 +85,19 @@
           {{ board.writeDate.substring(11, 19) }}</span
         >
         <!-- <span class="mx-2"></span> -->
+        <br>
         <v-divider vertical></v-divider>
         <span>
           <v-chip
             v-for="(keyword, index) in board.keyword.split('#').slice(1)"
             :key="board.board_id + ' ' + index + ' ' + keyword"
-            color="#f076b6"
-            class="mx-1"
-            style="color:white"
+            color="#14d3ff"
+            class="mr-1 mt-2"
+            style="color:white; font-weight: bold; border-radius: 6px !important"
             small
           >
             #{{ keyword }}
-          </v-chip>
+        </v-chip>
         </span>
       </v-flex>
 
@@ -126,24 +128,10 @@
             <v-col>
               <div style="font-size: 2rem; text-align: center;" class="fw800">
                 참여하기
-                <v-btn
-                  class="mx-2 "
-                  fab
-                  dark
-                  large
-                  color="pink"
-                  @click="joinBoard"
-                >
+                <v-btn class="mx-2 " fab dark large color="pink" @click="joinBoard">
                   <v-icon dark>mdi-heart</v-icon>
                 </v-btn>
-                <v-btn
-                  class="mx-2"
-                  fab
-                  dark
-                  large
-                  color="grey"
-                  @click="outBoard"
-                >
+                <v-btn class="mx-2" fab dark large color="grey" @click="outBoard">
                   <v-icon dark>mdi-heart</v-icon>
                 </v-btn>
                 취소하기
@@ -174,10 +162,10 @@
           <v-row>
             <v-col>
               <div style=" text-align: center;" class="fw800">
-                <v-btn class="mx-2 " fab dark large color="pink">
+                <v-btn class="mx-2 " fab dark large color="pink" @click="joinBoard">
                   <v-icon dark>mdi-heart</v-icon>참여
                 </v-btn>
-                <v-btn class="mx-2" fab dark large color="grey">
+                <v-btn class="mx-2" fab dark large color="grey" @click="outBoard">
                   <v-icon dark>mdi-heart</v-icon>취소
                 </v-btn>
               </div>
@@ -228,7 +216,7 @@
       <v-flex sm1 xs12 style="text-align: right;">
         <v-btn
           @click="writeComment"
-          style="height: 100%;width: 100%;background: #82b1ff; color: white;"
+          style="width: 100%;background: #82b1ff; color: white;"
           class="fw700"
           >댓글입력</v-btn
         >
