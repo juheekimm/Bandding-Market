@@ -128,10 +128,10 @@
             <v-col>
               <div style="font-size: 2rem; text-align: center;" class="fw800">
                 참여하기
-                <v-btn class="mx-2 " fab dark large color="pink">
+                <v-btn class="mx-2 " fab dark large color="pink" @click="joinBoard">
                   <v-icon dark>mdi-heart</v-icon>
                 </v-btn>
-                <v-btn class="mx-2" fab dark large color="grey">
+                <v-btn class="mx-2" fab dark large color="grey" @click="outBoard">
                   <v-icon dark>mdi-heart</v-icon>
                 </v-btn>
                 취소하기
@@ -162,10 +162,10 @@
           <v-row>
             <v-col>
               <div style=" text-align: center;" class="fw800">
-                <v-btn class="mx-2 " fab dark large color="pink">
+                <v-btn class="mx-2 " fab dark large color="pink" @click="joinBoard">
                   <v-icon dark>mdi-heart</v-icon>참여
                 </v-btn>
-                <v-btn class="mx-2" fab dark large color="grey">
+                <v-btn class="mx-2" fab dark large color="grey" @click="outBoard">
                   <v-icon dark>mdi-heart</v-icon>취소
                 </v-btn>
               </div>
