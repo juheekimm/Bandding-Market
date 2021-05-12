@@ -13,7 +13,7 @@
         "@fortawesome/vue-fontawesome": "^0.1.9",
         "@johmun/vue-tags-input": "^2.1.0",
         "axios": "^0.19.2",
-        "chart.js": "^2.9.3",
+        "chart.js": "^2.9.4",
         "chartkick": "^3.2.0",
         "core-js": "^3.6.4",
         "emoji-mart-vue": "^2.6.6",
